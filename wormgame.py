@@ -124,4 +124,5 @@ def peli():
     pygame.quit()
     quit()
 
-peli()
+if __name__ == "__main__":
+    peli()

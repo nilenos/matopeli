@@ -1,6 +1,8 @@
 # test_wormgame.py
 # Yksikkötestit matopelin tärkeimmille törmäystarkistuksille
 import pytest
+
+
 # Tarkistaa osuuko mato ruudun ulkopuolelle (seinään)
 def tormaako_seinaan(x, y, leveys, korkeus):
     return x < 0 or x >= leveys or y < 0 or y >= korkeus
