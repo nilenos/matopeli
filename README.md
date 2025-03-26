@@ -11,9 +11,8 @@ Toteutettu `pygame`-kirjastolla ja julkaistu `.exe`-muodossa automaattisesti Git
 
 ## Näyttökuva
 
-![Matopeli-näyttökuva](screenshots/matopeli.png)
+![Matopeli-näyttökuva](screenshots/wormgame.png)
 
-> Lisää `screenshots/wormgame.png`-kuvatiedosto projektiisi, jotta se näkyy GitHubissa.
 
 ---
 
