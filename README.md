@@ -3,7 +3,7 @@
 Pieni Pythonilla tehty klassinen matopeli.  
 Toteutettu `pygame`-kirjastolla ja julkaistu `.exe`-muodossa automaattisesti GitHub Actionsin avulla.
 
-[Lataa uusin versio]([https://github.com/nilenos/super-matopeli/releases/tag/auto-latest](https://github.com/nilenos/matopeli/releases)
+[![Uusin versio]([https://github.com/nilenos/super-matopeli/releases/tag/auto-latest](https://github.com/nilenos/matopeli/releases)
 
 [![GitHub release](https://img.shields.io/github/v/tag/nilenos/super-matopeli?label=versio)](https://github.com/nilenos/super-matopeli/releases)
 
@@ -13,7 +13,7 @@ Toteutettu `pygame`-kirjastolla ja julkaistu `.exe`-muodossa automaattisesti Git
 
 ![Matopeli-näyttökuva](screenshots/matopeli.png)
 
-> Lisää `screenshots/matopeli.png`-kuvatiedosto projektiisi, jotta se näkyy GitHubissa.
+> Lisää `screenshots/wormgame.png`-kuvatiedosto projektiisi, jotta se näkyy GitHubissa.
 
 ---
 
@@ -63,7 +63,7 @@ pyinstaller --onefile matopeli.py
 
 ##  Kehittäjä
 
-[GitHub: nilenos](https://github.com/nilenos)
+
 
 Ota yhteyttä parannusehdotusten tai kysymysten osalta!
 
