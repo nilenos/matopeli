@@ -10,30 +10,40 @@ valkoinen = (255, 255, 255)
 musta = (0, 0, 0)
 punainen = (213, 50, 80)
 vihreä = (0, 255, 0)
+sininen = (50, 153, 213)
 
 # Näytön koko
 leveys = 600
 korkeus = 400
-näyttö = pygame.display.set_mode((leveys, korkeus))
-pygame.display.set_caption('Matopeli')
 
-# Maton koko
-madon_koko = 10
-nopeus = 15
+# Peli-ikkuna
+ruutu = pygame.display.set_mode((leveys, korkeus))
+pygame.display.set_caption('Matopeli 🐍')
+
 kello = pygame.time.Clock()
 
-fontti = pygame.font.SysFont("arial", 25)
+# Madon palojen koko
+mato_blokin_koko = 10
+nopeus = 15
+
+# Fontit
+fontti = pygame.font.SysFont("bahnschrift", 25)
+pistefontti = pygame.font.SysFont("comicsansms", 20)
 
 def pisteet(pisteet):
-    arvo = fontti.render("Pisteet: " + str(pisteet), True, vihreä)
-    näyttö.blit(arvo, [0, 0])
+    arvo = pistefontti.render("Pisteet: " + str(pisteet), True, musta)
+    ruutu.blit(arvo, [0, 0])
 
-def madon_pituus(mato_lista):
-    for x in mato_lista:
-        pygame.draw.rect(näyttö, musta, [x[0], x[1], madon_koko, madon_koko])
+def mato(maton_palat):
+    for pala in maton_palat:
+        pygame.draw.rect(ruutu, vihreä, [pala[0], pala[1], mato_blokin_koko, mato_blokin_koko])
+
+def viesti(msg, väri):
+    teksti = fontti.render(msg, True, väri)
+    ruutu.blit(teksti, [leveys / 6, korkeus / 3])
 
 def peli():
-    peli_käynnissä = True
+    peli_päällä = True
     peli_loppu = False
 
     x = leveys / 2
@@ -42,80 +52,76 @@ def peli():
     x_muutos = 0
     y_muutos = 0
 
-    mato_lista = []
-    pituus = 1
+    maton_pituus = 1
+    maton_palat = []
 
-    ruoka_x = round(random.randrange(0, leveys - madon_koko) / 10.0) * 10.0
-    ruoka_y = round(random.randrange(0, korkeus - madon_koko) / 10.0) * 10.0
+    omena_x = round(random.randrange(0, leveys - mato_blokin_koko) / 10.0) * 10.0
+    omena_y = round(random.randrange(0, korkeus - mato_blokin_koko) / 10.0) * 10.0
 
-    while peli_käynnissä:
+    while peli_päällä:
 
         while peli_loppu:
-            näyttö.fill(valkoinen)
-            viesti = fontti.render("Hävisit! Enter jatkaa, Q lopettaa", True, punainen)
-            näyttö.blit(viesti, [leveys / 6, korkeus / 3])
-            pisteet(pituus - 1)
+            ruutu.fill(valkoinen)
+            viesti("Pelaa peli uudestaan. Hävisit !  Enter = Uudestaan, Esc = Lopeta", punainen)
+            pisteet(maton_pituus - 1)
             pygame.display.update()
 
             for tapahtuma in pygame.event.get():
                 if tapahtuma.type == pygame.KEYDOWN:
-                    if tapahtuma.key == pygame.K_q:
-                        peli_käynnissä = False
+                    if tapahtuma.key == pygame.K_ESCAPE:
+                        peli_päällä = False
                         peli_loppu = False
                     if tapahtuma.key == pygame.K_RETURN:
                         peli()
 
         for tapahtuma in pygame.event.get():
             if tapahtuma.type == pygame.QUIT:
-                peli_käynnissä = False
+                peli_päällä = False
             if tapahtuma.type == pygame.KEYDOWN:
                 if tapahtuma.key == pygame.K_LEFT:
-                    x_muutos = -madon_koko
+                    x_muutos = -mato_blokin_koko
                     y_muutos = 0
                 elif tapahtuma.key == pygame.K_RIGHT:
-                    x_muutos = madon_koko
+                    x_muutos = mato_blokin_koko
                     y_muutos = 0
                 elif tapahtuma.key == pygame.K_UP:
-                    y_muutos = -madon_koko
+                    y_muutos = -mato_blokin_koko
                     x_muutos = 0
                 elif tapahtuma.key == pygame.K_DOWN:
-                    y_muutos = madon_koko
+                    y_muutos = mato_blokin_koko
                     x_muutos = 0
 
-        x += x_muutos
-        y += y_muutos
-
+        # Tarkistetaan reunat
         if x >= leveys or x < 0 or y >= korkeus or y < 0:
             peli_loppu = True
 
-        näyttö.fill(valkoinen)
-        pygame.draw.rect(näyttö, punainen, [ruoka_x, ruoka_y, madon_koko, madon_koko])
+        x += x_muutos
+        y += y_muutos
+        ruutu.fill(sininen)
 
-        matopää = []
-        matopää.append(x)
-        matopää.append(y)
-        mato_lista.append(matopää)
+        pygame.draw.rect(ruutu, punainen, [omena_x, omena_y, mato_blokin_koko, mato_blokin_koko])
+        maton_palat.append([x, y])
+        if len(maton_palat) > maton_pituus:
+            del maton_palat[0]
 
-        if len(mato_lista) > pituus:
-            del mato_lista[0]
-
-        for segmentti in mato_lista[:-1]:
-            if segmentti == matopää:
+        # Osuma omaan häntään
+        for pala in maton_palat[:-1]:
+            if pala == [x, y]:
                 peli_loppu = True
 
-        madon_pituus(mato_lista)
-        pisteet(pituus - 1)
+        mato(maton_palat)
+        pisteet(maton_pituus - 1)
 
         pygame.display.update()
 
-        if x == ruoka_x and y == ruoka_y:
-            ruoka_x = round(random.randrange(0, leveys - madon_koko) / 10.0) * 10.0
-            ruoka_y = round(random.randrange(0, korkeus - madon_koko) / 10.0) * 10.0
-            pituus += 1
+        if x == omena_x and y == omena_y:
+            omena_x = round(random.randrange(0, leveys - mato_blokin_koko) / 10.0) * 10.0
+            omena_y = round(random.randrange(0, korkeus - mato_blokin_koko) / 10.0) * 10.0
+            maton_pituus += 1
 
         kello.tick(nopeus)
 
     pygame.quit()
     quit()
 
-peli() 
+peli()
