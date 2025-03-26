@@ -1,6 +1,5 @@
 # test_wormgame.py
 # Yksikkötestit matopelin tärkeimmille törmäystarkistuksille
-#from wormgame import tormaako_seinaan, tormaako_itseensa
 import pytest
 # Tarkistaa osuuko mato ruudun ulkopuolelle (seinään)
 def tormaako_seinaan(x, y, leveys, korkeus):
