@@ -32,11 +32,12 @@ jobs:
       - name: Build .exe with PyInstaller
         run: |
           pyinstaller --onefile wormgame.py
-
+      
       - name: Hae edellinen tagi ja laske seuraava
         id: version
         shell: bash
         run: |
+          git fetch --tags
           TAG=$(git tag --list 'v*' --sort=-v:refname | head -n 1)
           echo "Nykyinen tagi: $TAG"
 
@@ -62,6 +63,6 @@ jobs:
         with:
           name: Julkaisu ${{ env.NEXT_TAG }}
           tag_name: ${{ env.NEXT_TAG }}
-          files: dist/matopeli.exe
+          files: dist/wormgame.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
