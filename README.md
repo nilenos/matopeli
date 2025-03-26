@@ -3,7 +3,7 @@
 Pieni Pythonilla tehty klassinen matopeli.  
 Toteutettu `pygame`-kirjastolla ja julkaistu `.exe`-muodossa automaattisesti GitHub Actionsin avulla.
 
-[Lataa uusin versio](https://github.com/nilenos/super-matopeli/releases/tag/auto-latest)
+[Lataa uusin versio]([https://github.com/nilenos/super-matopeli/releases/tag/auto-latest](https://github.com/nilenos/matopeli/releases))
 
 [![GitHub release](https://img.shields.io/github/v/tag/nilenos/super-matopeli?label=versio)](https://github.com/nilenos/super-matopeli/releases)
 
